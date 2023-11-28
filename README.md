@@ -1,6 +1,4 @@
-# nvim
+# 💤 LazyVim
 
-## 插件
-
-- [Lazy.nvim](https://github.com/folke/lazy.nvim)
-
+A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
+Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
