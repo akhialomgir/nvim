@@ -6,18 +6,16 @@ keymap.set("n", "x", '"_x')
 keymap.set("n", "<Leader>p", '"0p')
 keymap.set("n", "<Leader>P", '"0P')
 keymap.set("v", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>c", '"_c')
-keymap.set("n", "<Leader>C", '"_C')
-keymap.set("v", "<Leader>c", '"_c')
-keymap.set("v", "<Leader>C", '"_C')
-keymap.set("n", "<Leader>d", '"_d')
-keymap.set("n", "<Leader>D", '"_D')
-keymap.set("v", "<Leader>d", '"_d')
-keymap.set("v", "<Leader>D", '"_D')
+keymap.set("n", "<Leader>xc", '"_c')
+keymap.set("n", "<Leader>xC", '"_C')
+keymap.set("v", "<Leader>xc", '"_c')
+keymap.set("v", "<Leader>xC", '"_C')
+keymap.set("n", "<Leader>xd", '"_d')
+keymap.set("n", "<Leader>xD", '"_D')
+keymap.set("v", "<Leader>xd", '"_d')
+keymap.set("v", "<Leader>xD", '"_D')
 
--- Increment/decrement
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+-- Dial owns + / -; Ctrl-A keeps the select-all mapping below.
 
 -- Delete a word backwards
 keymap.set("n", "dw", 'vb"_d')
@@ -32,8 +30,7 @@ keymap.set("n", "<C-a>", "gg<S-v>G")
 keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
 keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
 
--- Jumplist
-keymap.set("n", "<C-m>", "<C-i>", opts)
+-- Keep Enter and the native Ctrl-I jumplist command intact.
 
 -- New tab
 keymap.set("n", "te", ":tabedit")
@@ -56,17 +53,18 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
-	vim.diagnostic.goto_next()
+  vim.diagnostic.jump({ count = 1, float = true })
 end, opts)
 
 keymap.set("n", "<leader>r", function()
-	require("craftzdog.hsl").replaceHexWithHSL()
+  require("util.colors").replace_hex_with_hsl()
 end)
 
 keymap.set("n", "<leader>i", function()
-	require("craftzdog.lsp").toggleInlayHints()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 end)
 
 vim.api.nvim_create_user_command("ToggleAutoformat", function()
-	require("craftzdog.lsp").toggleAutoformat()
+  vim.g.autoformat = not (vim.g.autoformat ~= false)
+  vim.notify("Autoformat " .. (vim.g.autoformat and "enabled" or "disabled"))
 end, {})

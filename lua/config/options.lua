@@ -15,7 +15,6 @@ vim.opt.cmdheight = 1
 vim.opt.laststatus = 3
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
-local user_shell = "zsh"
 vim.opt.backupskip = { "/tmp/*", "/private/tmp/*" }
 vim.opt.inccommand = "split"
 vim.opt.ignorecase = true -- Case insensitive searching UNLESS /C or capital in search
@@ -32,9 +31,10 @@ vim.opt.splitright = true -- Put new windows right of current
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
 
--- Undercurl
-vim.cmd([[let &t_Cs = "\e[4:3m"]])
-vim.cmd([[let &t_Ce = "\e[4:0m"]])
+-- Neovim detects undercurl support from the terminal.
+vim.opt.termguicolors = true
+vim.opt.clipboard = "unnamedplus"
+vim.g.have_nerd_font = true
 
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
@@ -42,15 +42,13 @@ vim.opt.formatoptions:append({ "r" })
 -- vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 -- vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 
-if vim.fn.has("nvim-0.8") == 1 then
-	vim.opt.cmdheight = 0
-end
+vim.opt.cmdheight = 0
 
 -- File types
 vim.filetype.add({
-	extension = {
-		mdx = "mdx",
-	},
+  extension = {
+    mdx = "mdx",
+  },
 })
 
 vim.g.lazyvim_prettier_needs_config = true
